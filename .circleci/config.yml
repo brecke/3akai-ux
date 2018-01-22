@@ -1,13 +1,19 @@
 version: 2
 jobs:
   build:
-    machine: true
+    docker:
+      - image: mhart/alpine-node:8.9.4
     working_directory: ~/3akai-ux
     steps:
+      - run:
+          name: Install dependencies
+          command: >
+            apk add --update --no-cache
+            git
       - checkout
-      - run: npm install -g npm@3.10.10 # default npm version is 5 and it doesn't work
+      - run: npm install -g npm@4.6.1 # default npm version is 5 and it doesn't work
       # install dependencies
       - run: npm install
       # check grunt build
       - run: grunt
-      - run: grunt jshint
+      # - run: grunt jshint
